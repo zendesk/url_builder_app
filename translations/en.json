@@ -6,7 +6,7 @@
     "parameters": {
       "uri_templates": {
         "label": "A JSON Array of urls.",
-        "helpText": "ie: ['http://zendesk.com?{{assignee.email}}']"
+        "helpText": "See https://github.com/pi3r/links_app/blob/master/README.md for more information."
       }
     }
   }
