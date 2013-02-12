@@ -42,7 +42,7 @@
 
     initialize: function(){
       var templateUris = this.getUriTemplatesFromSettings();
-      var context = this.getContext(templateUris);
+      var context = this.getContext();
 
       var parsedUris = templateUris.map(function(uri){
         var template = Handlebars.compile(uri.url);
@@ -67,7 +67,7 @@
       return JSON.parse(this.settings.uri_templates);
     },
 
-    getContext: function(templateUris){
+    getContext: function(){
       return {
         ticket: { id: this.ticket().id() },
         assignee: this.userToHash(this.ticket().assignee().user()),
