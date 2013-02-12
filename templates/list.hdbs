@@ -1,0 +1,9 @@
+<div class="well well-small">
+  <ul>
+    {{#each uris}}
+    <li>
+      <strong><a href="{{this.url}}" target="_blank">{{this.title}}</a></strong>
+    </li>
+    {{/each}}
+  </ul>
+</div>

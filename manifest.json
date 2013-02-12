@@ -1,0 +1,20 @@
+{
+  "name": "Simple Url App",
+  "author": {
+    "name": "Pierre Nespo",
+    "email": "pierre.nespo@gmail.com"
+  },
+
+  "defaultLocale": "en",
+  "private": true,
+  "location": "ticket_sidebar",
+  "frameworkVersion": "0.5",
+
+  "parameters": [
+    {
+      "name": "uri_templates",
+      "type": "multiline",
+      "required": true
+    }
+  ]
+}
