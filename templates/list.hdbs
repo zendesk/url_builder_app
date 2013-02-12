@@ -2,7 +2,7 @@
   <ul>
     {{#each uris}}
     <li>
-      <strong><a href="{{this.url}}" target="_blank">{{this.title}}</a></strong>
+      <strong><a href="{{this.url}}" target="_blank" class="btn">{{this.title}}</a></strong>
     </li>
     {{/each}}
   </ul>
