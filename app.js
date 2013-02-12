@@ -2,18 +2,18 @@
   function NullUser(){
     this.id = function(){
       return "";
-    },
+    };
 
     this.email = function(){
       return "";
-    },
+    };
 
     this.name = function(){
       return "";
-    },
+    };
     this.externalId = function(){
       return "";
-    }
+    };
   }
 
   return {
@@ -78,7 +78,7 @@
     },
 
     extractCustomFieldsFromUrl: function(uri){
-      return uri.match(this.customFieldRegExp)
+      return uri.match(this.customFieldRegExp);
     },
 
     userToHash: function(user){
