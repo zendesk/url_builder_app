@@ -45,8 +45,6 @@
       var context = this.getContext();
 
       var parsedUris = templateUris.map(function(uri){
-        var template = Handlebars.compile(uri.url);
-
         if (this.uriHasCustomFields(uri.url)){
           var customFields = this.extractCustomFieldsFromUrl(uri.url);
 
@@ -55,7 +53,7 @@
           }, this);
         }
 
-        uri.url = template(context)
+        uri.url = _.template(uri.url, context, { interpolate : /\{\{(.+?)\}\}/g });
 
         return uri;
       }, this);
