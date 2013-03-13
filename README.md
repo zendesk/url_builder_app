@@ -6,14 +6,14 @@ A Zendesk App to help you generate links for agents.
 You'll need to provide a template for the links, here's an example:
 ```javascript
 [
-  { 
-    title: 'First Title', 
-    url: 'http://example.com/?name={{requester.name}}'
+  {
+    "title": 'First Title',
+    "url": 'http://example.com/?name={{requester.name}}'
   },
-  { 
-    title: 'Second Title (with custom field)', 
-    url: 'http://example.com/?custom={{custom_field_424242}}'
-  } 
+  {
+    "title": 'Second Title (with custom field)',
+    "url": 'http://example.com/?custom={{custom_field_424242}}'
+  }
 ]
 ```
 This example will generate the following Html inside the app:
