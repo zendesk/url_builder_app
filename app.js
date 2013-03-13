@@ -44,7 +44,7 @@
       var templateUris = this.getUriTemplatesFromSettings();
       var context = this.getContext();
 
-      var parsedUris = templateUris.map(function(uri){
+      var parsedUris = _.map(templateUris,function(uri){
         if (this.uriHasCustomFields(uri.url)){
           var customFields = this.extractCustomFieldsFromUrl(uri.url);
 
