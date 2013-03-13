@@ -7,12 +7,17 @@ You'll need to provide a template for the links, here's an example:
 ```javascript
 [
   {
-    "title": 'First Title',
-    "url": 'http://example.com/?name={{requester.name}}'
+    "title": "First Title",
+    "url": "http://example.com/?name={{requester.name}}"
   },
   {
-    "title": 'Second Title (with custom field)',
-    "url": 'http://example.com/?custom={{custom_field_424242}}'
+    "title": "Second Title (with custom field)",
+    "url": "http://example.com/?custom={{custom_field_424242}}"
+  },
+  {
+    "title": "Third Title (with encode to true)",
+    "url": "http://example.com/?email={{requester.email}}",
+    "encode": true
   }
 ]
 ```
@@ -22,8 +27,11 @@ This example will generate the following Html inside the app:
   <li>
     <a href="http://example.com/?name=Robert C.Martin">First Title</a>
   </li>
-    <li>
+  <li>
     <a href="http://example.com/?custom=secretRocketLaunchCodes">Second Title (with custom field)</a>
+  </li>
+  <li>
+    <a href="http://example.com/?email=user%40domain.com">Third Title (with encode to true)</a>
   </li>
 </ul>
 ```

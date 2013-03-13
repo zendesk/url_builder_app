@@ -45,6 +45,8 @@
       var context = this.getContext();
 
       var parsedUris = _.map(templateUris,function(uri){
+        var currentContext = context;
+
         if (this.uriHasCustomFields(uri.url)){
           var customFields = this.extractCustomFieldsFromUrl(uri.url);
 
@@ -52,8 +54,17 @@
             context[field] = this.ticket().customField(field);
           }, this);
         }
+        if (uri.encode)
+          currentContext = _.reduce(context, function(memo,value,key){
+            memo[key] = _.reduce(value, function(rmemo,rvalue,rkey){
+              if (!_.isEmpty(rvalue))
+                rmemo[rkey] = encodeURIComponent(rvalue);
+              return rmemo;
+            }, {});
+            return memo;
+          }, {});
 
-        uri.url = _.template(uri.url, context, { interpolate : /\{\{(.+?)\}\}/g });
+        uri.url = _.template(uri.url, currentContext, { interpolate : /\{\{(.+?)\}\}/g });
 
         return uri;
       }, this);
