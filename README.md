@@ -46,6 +46,10 @@ This example will generate the following Html inside the app:
 * {{assignee.name}}
 * {{assignee.email}}
 * {{assignee.externalId}}
+* {{current_user.id}}
+* {{current_user.name}}
+* {{current_user.email}}
+* {{current_user.externalId}}
 * {{custom_field_XXXXXXX}}
 
 ## Contribution

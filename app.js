@@ -1,18 +1,16 @@
 (function() {
-  function NullUser(){
-    this.id = function(){
-      return "";
-    };
+  function UserAttributes(user){
+    if (_.isUndefined(user))
+      return {
+        id: "", name: "",
+        email: "",externalId: ""
+      };
 
-    this.email = function(){
-      return "";
-    };
-
-    this.name = function(){
-      return "";
-    };
-    this.externalId = function(){
-      return "";
+    return {
+      id: user.id(),
+      name: user.name(),
+      email: user.email(),
+      externalId: user.externalId()
     };
   }
 
@@ -79,8 +77,9 @@
     getContext: function(){
       return {
         ticket: { id: this.ticket().id() },
-        assignee: this.userToHash(this.ticket().assignee().user()),
-        requester: this.userToHash(this.ticket().requester())
+        assignee: UserAttributes(this.ticket().assignee().user()),
+        requester: UserAttributes(this.ticket().requester()),
+        current_user: UserAttributes(this.currentUser())
       };
     },
 
@@ -90,19 +89,6 @@
 
     extractCustomFieldsFromUrl: function(uri){
       return uri.match(this.customFieldRegExp);
-    },
-
-    userToHash: function(user){
-      if (_.isUndefined(user))
-        user = new NullUser();
-
-      return {
-        id: user.id(),
-        name: user.name(),
-        email: user.email(),
-        externalId: user.externalId()
-      };
     }
   };
-
 }());
