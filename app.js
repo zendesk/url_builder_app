@@ -1,19 +1,4 @@
 (function() {
-  function UserAttributes(user){
-    if (_.isUndefined(user))
-      return {
-        id: "", name: "",
-        email: "",externalId: ""
-      };
-
-    return {
-      id: user.id(),
-      name: user.name(),
-      email: user.email(),
-      externalId: user.externalId()
-    };
-  }
-
   return {
     customFieldRegExp: /custom_field_[0-9]+/g,
 
@@ -77,9 +62,9 @@
     getContext: function(){
       return {
         ticket: { id: this.ticket().id() },
-        assignee: UserAttributes(this.ticket().assignee().user()),
-        requester: UserAttributes(this.ticket().requester()),
-        current_user: UserAttributes(this.currentUser())
+        assignee: this.userAttributes(this.ticket().assignee().user()),
+        requester: this.userAttributes(this.ticket().requester()),
+        current_user: this.userAttributes(this.currentUser())
       };
     },
 
@@ -89,6 +74,21 @@
 
     extractCustomFieldsFromUrl: function(uri){
       return uri.match(this.customFieldRegExp);
+    },
+
+    userAttributes: function(user){
+      if (_.isUndefined(user))
+        return {
+          id: "", name: "",
+          email: "",externalId: ""
+        };
+
+      return {
+        id: user.id(),
+        name: user.name(),
+        email: user.email(),
+        externalId: user.externalId()
+      };
     }
   };
 }());
