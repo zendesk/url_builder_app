@@ -1,10 +1,13 @@
 (function() {
   return {
-    customFieldRegExp: /custom_field_[0-9]+/g,
-
     events: {
       'app.activated'           : 'onActivated',
-      'ticket.status.changed'   : 'loadIfDataReady'
+      'ticket.status.changed'   : 'loadIfDataReady',
+      '*.changed'               : function(e){
+        if (_.contains(this.fieldsToWatch(), e.propertyName) ||
+            _.contains(this.fieldsToWatch(), e.propertyName.replace('ticket.', '')))
+          return this.initialize();
+      }
     },
 
     onActivated: function(data) {
@@ -15,10 +18,7 @@
 
     loadIfDataReady: function(){
       if(!this.doneLoading &&
-         this.ticket() &&
-         this.ticket().requester() &&
-         this.ticket().assignee()){
-
+         this.ticket()){
         this.initialize();
       }
     },
@@ -27,32 +27,12 @@
       var templateUris = this.getUriTemplatesFromSettings();
       var context = this.getContext();
 
-      var parsedUris = _.map(templateUris,function(uri){
-        var currentContext = context;
-
-        if (this.uriHasCustomFields(uri.url)){
-          var customFields = this.extractCustomFieldsFromUrl(uri.url);
-
-          _.each(customFields, function(field){
-            context[field] = this.ticket().customField(field);
-          }, this);
-        }
-        if (uri.encode)
-          currentContext = _.reduce(context, function(memo,value,key){
-            memo[key] = _.reduce(value, function(rmemo,rvalue,rkey){
-              if (!_.isEmpty(rvalue))
-                rmemo[rkey] = encodeURIComponent(rvalue);
-              return rmemo;
-            }, {});
-            return memo;
-          }, {});
-
-        uri.url = _.template(uri.url, currentContext, { interpolate : /\{\{(.+?)\}\}/g });
-
+      var uris = _.map(templateUris, function(uri){
+        uri.url = _.template(uri.url, context, { interpolate : /\{\{(.+?)\}\}/g });
         return uri;
       }, this);
 
-      this.switchTo('list', { uris: parsedUris });
+      this.switchTo('list', { uris: uris });
     },
 
     getUriTemplatesFromSettings: function(){
@@ -60,35 +40,29 @@
     },
 
     getContext: function(){
-      return {
-        ticket: { id: this.ticket().id() },
-        assignee: this.userAttributes(this.ticket().assignee().user()),
-        requester: this.userAttributes(this.ticket().requester()),
-        current_user: this.userAttributes(this.currentUser())
-      };
+      return _.extend(this.containerContext().ticket,
+                      this.currentUserContext());
     },
 
-    uriHasCustomFields: function(uri){
-      return this.customFieldRegExp.test(uri);
-    },
+    currentUserContext: function(){
+      var context = { current_user: {} };
 
-    extractCustomFieldsFromUrl: function(uri){
-      return uri.match(this.customFieldRegExp);
-    },
-
-    userAttributes: function(user){
-      if (_.isUndefined(user))
-        return {
-          id: "", name: "",
-          email: "",externalId: ""
+      if (this.currentUser()){
+        context.current_user = {
+          id: this.currentUser().id(),
+          email: this.currentUser().email(),
+          name: this.currentUser().name(),
+          externalId: this.currentUser().externalId()
         };
+      }
+      return context;
+    },
 
-      return {
-        id: user.id(),
-        name: user.name(),
-        email: user.email(),
-        externalId: user.externalId()
-      };
-    }
+    fieldsToWatch: _.memoize(function(){
+      return _.reduce(this.getUriTemplatesFromSettings(), function(memo, uri){
+        var fields = _.map(uri.url.match(/\{\{(.+?)\}\}/g), function(f){  return f.slice(2,-2); });
+        return _.union(memo, fields);
+      }, []);
+    })
   };
 }());

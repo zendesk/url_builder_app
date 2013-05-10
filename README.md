@@ -13,11 +13,6 @@ You'll need to provide a template for the links, here's an example:
   {
     "title": "Second Title (with custom field)",
     "url": "http://example.com/?custom={{custom_field_424242}}"
-  },
-  {
-    "title": "Third Title (with encode to true)",
-    "url": "http://example.com/?email={{requester.email}}",
-    "encode": true
   }
 ]
 ```
@@ -30,9 +25,6 @@ This example will generate the following Html inside the app:
   <li>
     <a href="http://example.com/?custom=secretRocketLaunchCodes">Second Title (with custom field)</a>
   </li>
-  <li>
-    <a href="http://example.com/?email=user%40domain.com">Third Title (with encode to true)</a>
-  </li>
 </ul>
 ```
 
@@ -42,10 +34,12 @@ This example will generate the following Html inside the app:
 * {{requester.name}}
 * {{requester.email}}
 * {{requester.externalId}}
-* {{assignee.id}}
-* {{assignee.name}}
-* {{assignee.email}}
-* {{assignee.externalId}}
+* {{assignee.user.id}}
+* {{assignee.user.name}}
+* {{assignee.user.email}}
+* {{assignee.user.externalId}}
+* {{assignee.group.id}}
+* {{assignee.group.name}}
 * {{current_user.id}}
 * {{current_user.name}}
 * {{current_user.email}}
