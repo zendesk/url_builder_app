@@ -4,8 +4,7 @@
       'app.activated'           : 'onActivated',
       'ticket.status.changed'   : 'loadIfDataReady',
       '*.changed'               : function(e){
-        if (_.contains(this.fieldsToWatch(), e.propertyName) ||
-            _.contains(this.fieldsToWatch(), e.propertyName.replace('ticket.', '')))
+        if (_.contains(this.fieldsToWatch(), e.propertyName))
           return this.initialize();
       }
     },
@@ -40,7 +39,7 @@
     },
 
     getContext: function(){
-      return _.extend(this.containerContext().ticket,
+      return _.extend(this.containerContext(),
                       this.currentUserContext());
     },
 

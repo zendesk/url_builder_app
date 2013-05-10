@@ -30,21 +30,21 @@ This example will generate the following Html inside the app:
 
 
 ## Available Variables
-* {{requester.id}}
-* {{requester.name}}
-* {{requester.email}}
-* {{requester.externalId}}
-* {{assignee.user.id}}
-* {{assignee.user.name}}
-* {{assignee.user.email}}
-* {{assignee.user.externalId}}
-* {{assignee.group.id}}
-* {{assignee.group.name}}
-* {{current_user.id}}
+* {{ticket.requester.id}}
+* {{ticket.requester.name}}
+* {{ticket.requester.email}}
+* {{ticket.requester.externalId}}
+* {{ticket.assignee.user.id}}
+* {{ticket.assignee.user.name}}
+* {{ticket.assignee.user.email}}
+* {{ticket.assignee.user.externalId}}
+* {{ticket.assignee.group.id}}
+* {{ticket.assignee.group.name}}
+* {{ticket.current_user.id}}
+* {{ticket.custom_field_XXXXXXX}}
 * {{current_user.name}}
 * {{current_user.email}}
 * {{current_user.externalId}}
-* {{custom_field_XXXXXXX}}
 
 ## Contribution
 
