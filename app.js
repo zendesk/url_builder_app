@@ -39,22 +39,53 @@
     },
 
     getContext: function(){
-      return _.extend(this.containerContext(),
+      return _.extend(this.customContainerContext(),
                       this.currentUserContext());
+    },
+
+    customContainerContext: function(){
+      var context = this.containerContext();
+
+      _.extend(context.ticket.requester,
+               this.splitUsername(context.ticket.requester.name));
+
+      return context;
     },
 
     currentUserContext: function(){
       var context = { current_user: {} };
 
       if (this.currentUser()){
+        var names = this.splitUsername(this.currentUser().name());
+
         context.current_user = {
           id: this.currentUser().id(),
           email: this.currentUser().email(),
           name: this.currentUser().name(),
+          firstname: names.firstname,
+          lastname: names.lastname,
           externalId: this.currentUser().externalId()
         };
       }
       return context;
+    },
+
+    splitUsername: function(username){
+      var names = username.split(' ');
+      var obj = {
+        firstname: '',
+        lastname: ''
+      };
+
+      if (!_.isEmpty(names)){
+        obj.firstname = names.shift();
+
+        if (!_.isEmpty(names)){
+          obj.lastname = names.join(' ');
+        }
+      }
+
+      return obj;
     },
 
     fieldsToWatch: _.memoize(function(){
