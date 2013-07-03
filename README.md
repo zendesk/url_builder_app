@@ -34,17 +34,23 @@ This example will generate the following Html inside the app:
 * {{ticket.requester.name}}
 * {{ticket.requester.email}}
 * {{ticket.requester.externalId}}
+* {{ticket.requester.firstname}}
+* {{ticket.requester.lastname}}
 * {{ticket.assignee.user.id}}
 * {{ticket.assignee.user.name}}
 * {{ticket.assignee.user.email}}
 * {{ticket.assignee.user.externalId}}
+* {{ticket.assignee.user.firstname}}
+* {{ticket.assignee.user.lastname}}
 * {{ticket.assignee.group.id}}
 * {{ticket.assignee.group.name}}
-* {{ticket.current_user.id}}
 * {{ticket.custom_field_XXXXXXX}}
+* {{current_user.id}}
 * {{current_user.name}}
 * {{current_user.email}}
 * {{current_user.externalId}}
+* {{current_user.firstname}}
+* {{current_user.lastname}}
 
 ## Contribution
 
