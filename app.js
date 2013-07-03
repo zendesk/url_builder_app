@@ -49,6 +49,11 @@
       _.extend(context.ticket.requester,
                this.splitUsername(context.ticket.requester.name));
 
+      if (!_.isEmpty(context.ticket.assignee.user.name)){
+        _.extend(context.ticket.assignee.user,
+                 this.splitUsername(context.ticket.assignee.user.name));
+      }
+
       return context;
     },
 
