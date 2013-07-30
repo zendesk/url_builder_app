@@ -1,4 +1,4 @@
-# Links App - Url Builder
+# Url Builder App
 
 A Zendesk App to help you generate links for agents.
 
