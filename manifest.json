@@ -1,8 +1,8 @@
 {
-  "name": "Simple Url App",
+  "name": "Url Builder App",
   "author": {
-    "name": "Pierre Nespo",
-    "email": "pierre.nespo@gmail.com"
+    "name": "Zendesk Services",
+    "email": "services@zendesk.com"
   },
 
   "defaultLocale": "en",
