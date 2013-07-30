@@ -1,5 +1,4 @@
-Links App - Url Builder
-=========
+# Links App - Url Builder
 
 A Zendesk App to help you generate links for agents.
 
@@ -16,6 +15,7 @@ You'll need to provide a template for the links, here's an example:
   }
 ]
 ```
+
 This example will generate the following Html inside the app:
 ```html
 <ul>
@@ -28,8 +28,7 @@ This example will generate the following Html inside the app:
 </ul>
 ```
 
-
-## Available Variables
+### Available Placeholder
 * {{ticket.requester.id}}
 * {{ticket.requester.name}}
 * {{ticket.requester.email}}
