@@ -54,3 +54,5 @@ This example will generate the following Html inside the app:
 ## Contribution
 
 Improvements are always welcome. To contribute, please submit detailed Pull Requests.
+
+By downloading this app, you are agreeing to our [terms and conditions](https://github.com/zendesklabs/wiki/wiki/Terms-and-Conditions)
