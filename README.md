@@ -1,3 +1,5 @@
+:warning: *Use of this software is subject to important terms and conditions as set forth in the License file* :warning:
+
 # Url Builder App
 
 A Zendesk App to help you generate links for agents.
@@ -55,4 +57,3 @@ This example will generate the following Html inside the app:
 
 Improvements are always welcome. To contribute, please submit detailed Pull Requests.
 
-By downloading this app, you are agreeing to our [terms and conditions](https://github.com/zendesklabs/wiki/wiki/Terms-and-Conditions)
