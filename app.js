@@ -1,35 +1,45 @@
 (function() {
   return {
+    requests: {
+      fetchUsers: function(ids) {
+        return {
+          url: helpers.fmt('/api/v2/users/show_many.json?ids=%@&include=organizations,groups', ids.join(',')),
+          type: 'GET',
+          dataType: 'json'
+        };
+      }
+    },
+
     events: {
-      'app.activated'           : 'onActivated',
-      'ticket.status.changed'   : 'loadIfDataReady',
-      '*.changed'               : function(e){
+      'app.activated'           : 'onAppActivated',
+      '*.changed'               : function(e) {
         if (_.contains(this.fieldsToWatch(), e.propertyName))
-          return this.initialize();
-      }
+          return this.onAppActivated();
+      },
+      'fetchUsers.done' : 'onFetchUsersDone'
     },
 
-    onActivated: function(data) {
-      this.doneLoading = false;
+    onAppActivated: function() {
+      var userIds = _.compact(_.uniq([
+        (this.ticket().assignee().user() && this.ticket().assignee().user().id()),
+        this.currentUser().id(),
+        (this.ticket().requester() && this.ticket().requester().id())
+      ]));
 
-      this.loadIfDataReady();
+      this.ajax('fetchUsers', userIds);
     },
 
-    loadIfDataReady: function(){
-      if(!this.doneLoading &&
-         this.ticket()){
-        this.initialize();
-      }
-    },
-
-    initialize: function(){
-      var templateUris = this.getUriTemplatesFromSettings();
-      var context = this.getContext();
-
-      var uris = _.map(templateUris, function(uri){
-        uri.url = _.template(uri.url, context, { interpolate : /\{\{(.+?)\}\}/g });
-        return uri;
-      }, this);
+    onFetchUsersDone: function(data) {
+      var templateUris = this.getUriTemplatesFromSettings(),
+          context = this.getContext(data),
+          uris = _.map(templateUris, function(uri){
+            try {
+              uri.url = _.template(uri.url, context, { interpolate : /\{\{(.+?)\}\}/g });
+            } catch(e) {
+              // do nothing, we'll just return an unmodified version or uri.url
+            }
+            return uri;
+          }, this);
 
       this.switchTo('list', { uris: uris });
     },
@@ -38,64 +48,50 @@
       return JSON.parse(this.settings.uri_templates);
     },
 
-    getContext: function(){
-      return _.extend(this.customContainerContext(),
-                      this.currentUserContext());
-    },
+    getContext: function(data){
+      var context = _.clone(this.containerContext());
 
-    customContainerContext: function(){
-      var context = this.containerContext();
+      if (context.ticket.requester.id) {
 
-      _.extend(context.ticket.requester,
-               this.splitUsername(context.ticket.requester.name));
+        context.ticket.requester = this.decorateUser(this.findUserById(data.users, context.ticket.requester.id));
 
-      if (!_.isEmpty(context.ticket.assignee.user.name)){
-        _.extend(context.ticket.assignee.user,
-                 this.splitUsername(context.ticket.assignee.user.name));
-      }
-
-      return context;
-    },
-
-    currentUserContext: function(){
-      var context = { current_user: {} };
-
-      if (this.currentUser()){
-        var names = this.splitUsername(this.currentUser().name());
-
-        context.current_user = {
-          id: this.currentUser().id(),
-          email: this.currentUser().email(),
-          name: this.currentUser().name(),
-          firstname: names.firstname,
-          lastname: names.lastname,
-          externalId: this.currentUser().externalId()
-        };
-      }
-      return context;
-    },
-
-    splitUsername: function(username){
-      var names = username.split(' ');
-      var obj = {
-        firstname: '',
-        lastname: ''
-      };
-
-      if (!_.isEmpty(names)){
-        obj.firstname = names.shift();
-
-        if (!_.isEmpty(names)){
-          obj.lastname = names.join(' ');
+        if (context.ticket.requester.organization_id) {
+          context.ticket.organization = _.find(data.organizations, function(org) {
+            return org.id == context.ticket.requester.organization_id;
+          });
         }
       }
 
-      return obj;
+      if (context.ticket.assignee.user.id) {
+
+        context.ticket.assignee.user = this.decorateUser(this.findUserById(data.users, context.ticket.assignee.user.id));
+      }
+
+
+      context.current_user = this.decorateUser(this.findUserById(data.users,
+                                                                 this.currentUser().id()));
+      return context;
+    },
+
+    findUserById: function(users, user_id) {
+      return _.find(users, function(user) {
+        return user.id == user_id;
+      }, this);
+    },
+
+    decorateUser: function(user){
+      var name = (user.name || '').split(' ');
+
+      user.firstname = name[0] || '';
+      user.lastname = name[1] || '';
+
+      return user;
     },
 
     fieldsToWatch: _.memoize(function(){
       return _.reduce(this.getUriTemplatesFromSettings(), function(memo, uri){
         var fields = _.map(uri.url.match(/\{\{(.+?)\}\}/g), function(f){  return f.slice(2,-2); });
+
         return _.union(memo, fields);
       }, []);
     })
