@@ -45,7 +45,8 @@ This example will generate the following Html inside the app:
 * {{ticket.assignee.user.lastname}}
 * {{ticket.assignee.group.id}}
 * {{ticket.assignee.group.name}}
-* {{ticket.custom_field_XXXXXXX}}
+* {{ticket.custom_field_XXXXXXX}} // XXXXXXX = custom field id
+* {{ticket.organization.organization_fields.XXXXXXX}} // XXXXXXX = Field key, default is field name
 * {{current_user.id}}
 * {{current_user.name}}
 * {{current_user.email}}
