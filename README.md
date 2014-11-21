@@ -72,6 +72,8 @@ This example will generate the following HTML inside the app:
 
 If you wish to change the output, locate the app by looking for the name you choose in step 4 above. Use the widget to `Change Settings`
 
+<img width="195" src="https://github.com/watchmanmonitoring/url_builder_app/raw/master/assets/app-settings-change.png" />
+
 
 ## Contribution
 
