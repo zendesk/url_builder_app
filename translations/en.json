@@ -6,7 +6,7 @@
     "parameters": {
       "uri_templates": {
         "label": "A JSON Array of urls.",
-        "helpText": "See https://github.com/pi3r/links_app/blob/master/README.md for more information."
+        "helpText": "See https://github.com/zendesklabs/url_builder_app/blob/master/README.md for more information."
       }
     }
   }
