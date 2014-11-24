@@ -1,10 +1,25 @@
 :warning: *Use of this software is subject to important terms and conditions as set forth in the License file* :warning:
 
-# Url Builder App
+# URL Builder App
 
 A Zendesk App to help you generate links for agents.
 
-You'll need to provide a template for the links, here's an example:
+# Instructions
+
+1. Download a [.zip of this app](https://github.com/zendesklabs/url_builder_app/archive/master.zip)
+2. Navigate to your Zendesk Admin's Apps -> Manage page
+3. Click `Upload App`
+4. Enter a descriptive name of your choosing, and upload this .zip
+5. Click `Upload`
+6. Confirm the title, the second box is for the `json`, described below.
+7. Optionally enable role restrictions if these URLs are not appropriate for all agents.
+8. Once your .json is in place, click `Install`.
+9. Open a new browser to test your results.
+
+# JSON Array of URLs
+
+The following is an example of what can be entered into this app's settings:
+
 ```javascript
 [
   {
@@ -18,7 +33,7 @@ You'll need to provide a template for the links, here's an example:
 ]
 ```
 
-This example will generate the following Html inside the app:
+This example will generate the following HTML inside the app:
 ```html
 <ul>
   <li>
@@ -53,6 +68,13 @@ This example will generate the following Html inside the app:
 * {{current_user.externalId}}
 * {{current_user.firstname}}
 * {{current_user.lastname}}
+
+### Making changes
+
+If you wish to change the output, locate the app by looking for the name you choose in step 4 above. Use the widget to `Change Settings`
+
+<img width="195" src="https://github.com/watchmanmonitoring/url_builder_app/raw/master/assets/app-settings-change.png" />
+
 
 ## Contribution
 
