@@ -52,6 +52,7 @@ This example will generate the following HTML inside the app:
 * {{ticket.requester.externalId}}
 * {{ticket.requester.firstname}}
 * {{ticket.requester.lastname}}
+* {{ticket.requester.user_fields.YYY}} = custom user fields can be used
 * {{ticket.assignee.user.id}}
 * {{ticket.assignee.user.name}}
 * {{ticket.assignee.user.email}}
@@ -79,4 +80,3 @@ If you wish to change the output, locate the app by looking for the name you cho
 ## Contribution
 
 Improvements are always welcome. To contribute, please submit detailed Pull Requests.
-
