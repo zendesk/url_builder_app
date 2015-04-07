@@ -11,7 +11,7 @@
     },
 
     events: {
-      'app.activated'           : 'onAppActivated',
+      'app.created'             : 'onAppCreated',
       '*.changed'               : function(e) {
         if (_.contains(this.fieldsToWatch(), e.propertyName))
           return this.onAppActivated();
@@ -19,7 +19,7 @@
       'fetchUsers.done' : 'onFetchUsersDone'
     },
 
-    onAppActivated: function() {
+    onAppCreated: function() {
       var userIds = _.compact(_.uniq([
         (this.ticket().assignee().user() && this.ticket().assignee().user().id()),
         this.currentUser().id(),
@@ -31,10 +31,12 @@
 
     onFetchUsersDone: function(data) {
       var templateUris = this.getUriTemplatesFromSettings(),
+          templateOptions = { interpolate : /\{\{(.+?)\}\}/g },
           context = this.getContext(data),
           uris = _.map(templateUris, function(uri){
             try {
-              uri.url = _.template(uri.url, context, { interpolate : /\{\{(.+?)\}\}/g });
+              uri.title = _.template(uri.title, context, templateOptions);
+              uri.url = _.template(uri.url, context, templateOptions);
             } catch(e) {
               // do nothing, we'll just return an unmodified version or uri.url
             }
