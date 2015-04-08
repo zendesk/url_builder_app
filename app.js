@@ -35,10 +35,10 @@
           context = this.getContext(data),
           uris = _.map(templateUris, function(uri){
             try {
-              uri.title = _.template(uri.title, context, templateOptions);
-              uri.url = _.template(uri.url, context, templateOptions);
+              uri.url = _.template(uri.url, templateOptions)(context);
+              uri.title = _.template(uri.title, templateOptions)(context);
             } catch(e) {
-              // do nothing, we'll just return an unmodified version or uri.url
+              console.log('[URL_BUILDER_APP] ' + e);
             }
             return uri;
           }, this);
