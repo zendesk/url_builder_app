@@ -45,7 +45,8 @@ This example will generate the following HTML inside the app:
 </ul>
 ```
 
-### Available Placeholder
+### Available Placeholders
+* {{ticket.id}} //not available for new tickets
 * {{ticket.requester.id}}
 * {{ticket.requester.name}}
 * {{ticket.requester.email}}
