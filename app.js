@@ -67,9 +67,12 @@
         context.ticket.assignee.user = this.decorateUser(this.findUserById(data.users, context.ticket.assignee.user.id));
       }
 
+      //copying data not available on this.containerContext()
+      context.ticket.id = this.ticket().id();
       context.ticket.description = this.ticket().description();
-      context.current_user = this.decorateUser(this.findUserById(data.users,
-                                                                 this.currentUser().id()));
+
+      context.current_user = this.decorateUser(this.findUserById(data.users, this.currentUser().id()));
+
       return context;
     },
 
