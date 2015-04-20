@@ -54,7 +54,6 @@
       var context = _.clone(this.containerContext());
 
       if (context.ticket.requester.id) {
-
         context.ticket.requester = this.decorateUser(this.findUserById(data.users, context.ticket.requester.id));
 
         if (context.ticket.requester.organization_id) {
@@ -65,11 +64,10 @@
       }
 
       if (context.ticket.assignee.user.id) {
-
         context.ticket.assignee.user = this.decorateUser(this.findUserById(data.users, context.ticket.assignee.user.id));
       }
 
-
+      context.ticket.description = this.ticket().description();
       context.current_user = this.decorateUser(this.findUserById(data.users,
                                                                  this.currentUser().id()));
       return context;

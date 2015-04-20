@@ -46,6 +46,7 @@ This example will generate the following HTML inside the app:
 ```
 
 ### Available Placeholder
+* {{ticket.description}}
 * {{ticket.requester.id}}
 * {{ticket.requester.name}}
 * {{ticket.requester.email}}
