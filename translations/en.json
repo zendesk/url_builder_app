@@ -1,11 +1,11 @@
 {
   "app": {
-    "description":  "Simple url generator",
-    "name":         "Simple Url",
+    "description":  "Simple URL generator",
+    "name":         "Simple URL generator",
 
     "parameters": {
       "uri_templates": {
-        "label": "A JSON Array of urls.",
+        "label": "A JSON Array of URLs.",
         "helpText": "See https://github.com/zendesklabs/url_builder_app/blob/master/README.md for more information."
       }
     }

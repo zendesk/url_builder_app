@@ -72,6 +72,10 @@ This example will generate the following HTML inside the app:
 * {{current_user.firstname}}
 * {{current_user.lastname}}
 
+### Screenshots
+
+![](/assets/screenshot.png)
+
 ### Making changes
 
 If you wish to change the output, locate the app by looking for the name you choose in step 4 above. Use the widget to `Change Settings`
