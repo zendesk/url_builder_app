@@ -46,19 +46,22 @@ This example will generate the following HTML inside the app:
 ```
 
 ### Available Placeholders
+
+#### Ticket sidebar
+
 * {{ticket.id}} //not available for new tickets
 * {{ticket.description}}
 * {{ticket.requester.id}}
 * {{ticket.requester.name}}
 * {{ticket.requester.email}}
-* {{ticket.requester.externalId}}
+* {{ticket.requester.external_id}}
 * {{ticket.requester.firstname}}
 * {{ticket.requester.lastname}}
 * {{ticket.requester.user_fields.YYY}} = custom user fields can be used
 * {{ticket.assignee.user.id}}
 * {{ticket.assignee.user.name}}
 * {{ticket.assignee.user.email}}
-* {{ticket.assignee.user.externalId}}
+* {{ticket.assignee.user.external_id}}
 * {{ticket.assignee.user.firstname}}
 * {{ticket.assignee.user.lastname}}
 * {{ticket.assignee.group.id}}
@@ -68,9 +71,29 @@ This example will generate the following HTML inside the app:
 * {{current_user.id}}
 * {{current_user.name}}
 * {{current_user.email}}
-* {{current_user.externalId}}
+* {{current_user.external_id}}
 * {{current_user.firstname}}
 * {{current_user.lastname}}
+
+#### User sidebar
+
+* {{user.id}}
+* {{user.name}}
+* {{user.email}}
+* {{user.phone}}
+* {{user.external_id}}
+* {{user.firstname}}
+* {{user.lastname}}
+* {{user.user_fields.YYY}} = custom user fields can be used
+* {{user.organization.id}} (if user belongs to multiple organizations, only the default one will be used)
+* {{user.organization.name}}
+* {{user.organization.external_id}}
+* {{user.organization.organization_fields.XXXXXXX}} = custom organization fields can be used
+
+
+### Screenshots
+
+![](/assets/screenshot.png)
 
 ### Making changes
 
