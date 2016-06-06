@@ -2,9 +2,11 @@
 
 # URL Builder App
 
+## Description:
+
 A Zendesk App to help you generate links for agents.
 
-# Instructions
+## Instructions:
 
 1. Download a [.zip of this app](https://github.com/zendesklabs/url_builder_app/archive/master.zip)
 2. Navigate to your Zendesk Admin's Apps -> Manage page
@@ -16,7 +18,7 @@ A Zendesk App to help you generate links for agents.
 8. Once your .json is in place, click `Install`.
 9. Open a new browser to test your results.
 
-# JSON Array of URLs
+## JSON Array of URLs:
 
 The following is an example of what can be entered into this app's settings:
 
@@ -82,3 +84,6 @@ If you wish to change the output, locate the app by looking for the name you cho
 ## Contribution
 
 Improvements are always welcome. To contribute, please submit detailed Pull Requests.
+
+## Screenshot(s):
+![screenshot-1](/assets/screenshot.png)
