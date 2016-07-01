@@ -1,5 +1,5 @@
 {
-  "name": "Url Builder App",
+  "name": "URL Builder App",
   "author": {
     "name": "Zendesk Services",
     "email": "services@zendesk.com"
@@ -7,9 +7,9 @@
 
   "defaultLocale": "en",
   "private": true,
-  "location": ["ticket_sidebar", "new_ticket_sidebar"],
+  "location": ["ticket_sidebar", "new_ticket_sidebar", "user_sidebar"],
   "frameworkVersion": "1.0",
-  "version": "1.0.1",
+  "version": "1.0.2",
 
   "parameters": [
     {
