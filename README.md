@@ -60,7 +60,7 @@ This example will generate the following HTML inside the app:
 * {{ticket.assignee.user.id}}
 * {{ticket.assignee.user.name}}
 * {{ticket.assignee.user.email}}
-* {{ticket.assignee.user.externalId}}
+* {{ticket.assignee.user.external_id}}
 * {{ticket.assignee.user.firstname}}
 * {{ticket.assignee.user.lastname}}
 * {{ticket.assignee.group.id}}
