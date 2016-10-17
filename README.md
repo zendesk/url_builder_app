@@ -4,7 +4,7 @@
 
 ## Description:
 
-A Zendesk App to help you generate links for agents.
+A Zendesk App to help you generate useful links for Agents.
 
 ## Instructions:
 
