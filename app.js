@@ -14,7 +14,7 @@
       'app.created'             : 'onAppCreated',
       '*.changed'               : function(e) {
         if (_.contains(this.fieldsToWatch(), e.propertyName))
-          return this.onAppActivated();
+          return this.onAppCreated();
       },
       'fetchUsers.done' : 'onFetchUsersDone'
     },
