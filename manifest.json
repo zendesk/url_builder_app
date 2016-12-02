@@ -2,11 +2,12 @@
   "name": "Url Builder App",
   "author": {
     "name": "Zendesk Services",
-    "email": "services@zendesk.com"
+    "email": "services@zendesk.com",
+    "url": "https://www.zendesk.com/services/"
   },
 
   "defaultLocale": "en",
-  "private": true,
+  "private": false,
   "location": ["ticket_sidebar", "new_ticket_sidebar"],
   "frameworkVersion": "1.0",
   "version": "1.0.2",
