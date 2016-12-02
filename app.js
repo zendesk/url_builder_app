@@ -38,7 +38,7 @@
               uri.url = _.template(uri.url, templateOptions)(context);
               uri.title = _.template(uri.title, templateOptions)(context);
             } catch(e) {
-              console.log('[URL_BUILDER_APP] ' + e);
+              services.notify(e, 'error');
             }
             return uri;
           }, this);
