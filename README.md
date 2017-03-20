@@ -48,31 +48,31 @@ This example will generate the following HTML inside the app:
 ```
 
 ### Available Placeholders
-* {{ticket.id}} //not available for new tickets
-* {{ticket.description}}
-* {{ticket.requester.id}}
-* {{ticket.requester.name}}
-* {{ticket.requester.email}}
-* {{ticket.requester.externalId}}
-* {{ticket.requester.firstname}}
-* {{ticket.requester.lastname}}
-* {{ticket.requester.user_fields.YYY}} = custom user fields can be used
-* {{ticket.assignee.user.id}}
-* {{ticket.assignee.user.name}}
-* {{ticket.assignee.user.email}}
-* {{ticket.assignee.user.externalId}}
-* {{ticket.assignee.user.firstname}}
-* {{ticket.assignee.user.lastname}}
-* {{ticket.assignee.group.id}}
-* {{ticket.assignee.group.name}}
-* {{ticket.custom_field_XXXXXXX}} // XXXXXXX = custom field id
-* {{ticket.organization.organization_fields.XXXXXXX}} // XXXXXXX = Field key, default is field name
-* {{current_user.id}}
-* {{current_user.name}}
-* {{current_user.email}}
-* {{current_user.externalId}}
-* {{current_user.firstname}}
-* {{current_user.lastname}}
+* `{{ticket.id}}` //not available for new tickets
+* `{{ticket.description}}`
+* `{{ticket.requester.id}}`
+* `{{ticket.requester.name}}`
+* `{{ticket.requester.email}}`
+* `{{ticket.requester.externalId}}`
+* `{{ticket.requester.firstname}}`
+* `{{ticket.requester.lastname}}`
+* `{{ticket.requester.user_fields.YYY}}` = custom user fields can be used
+* `{{ticket.assignee.user.id}}`
+* `{{ticket.assignee.user.name}}`
+* `{{ticket.assignee.user.email}}`
+* `{{ticket.assignee.user.externalId}}`
+* `{{ticket.assignee.user.firstname}}`
+* `{{ticket.assignee.user.lastname}}`
+* `{{ticket.assignee.group.id}}`
+* `{{ticket.assignee.group.name}}`
+* `{{ticket.custom_field_XXXXXXX}}` // XXXXXXX = custom field id
+* `{{ticket.organization.organization_fields.XXXXXXX}}` // XXXXXXX = Field key, default is field name
+* `{{current_user.id}}`
+* `{{current_user.name}}`
+* `{{current_user.email}}`
+* `{{current_user.externalId}}`
+* `{{current_user.firstname}}`
+* `{{current_user.lastname}}`
 
 ### Making changes
 
