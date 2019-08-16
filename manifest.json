@@ -1,16 +1,12 @@
 {
-  "name": "Url Builder App",
+  "name": "Easy Url Builder App",
   "author": {
-    "name": "Zendesk Services",
-    "email": "services@zendesk.com",
-    "url": "https://www.zendesk.com/services/"
+    "name": "Easy URL Builder",
+    "email": "developers@ibotta.com",
+    "url": "https://www.ibotta.com/"
   },
-
   "defaultLocale": "en",
-  "private": false,
-  "location": ["ticket_sidebar", "new_ticket_sidebar"],
-  "frameworkVersion": "1.0",
-  "version": "1.0.2",
+  "private": true,
 
   "parameters": [
     {
@@ -18,5 +14,15 @@
       "type": "multiline",
       "required": true
     }
-  ]
+  ], 
+
+  "location": {
+    "support": {
+      "ticket_sidebar": "assets/iframe.html",
+      "new_ticket_sidebar": "assets/iframe.html"
+    }
+  },
+
+  "frameworkVersion": "2.0",
+  "version": "1.0.0"
 }
