@@ -2,11 +2,11 @@ $(function () {
 
   function getUriTemplatesFromSettings() {
     return JSON.parse(this.settings.uri_templates);
-  }
+  };
 
   _.memoize(function fieldsToWatch() {
     return _.reduce(getUriTemplatesFromSettings(), function (memo, uri) {
-      var fields = _.map(uri.url.match(/\{\{(.+?)\}\}/g), function (f) { return f.slice(2, -2); });
+      let fields = _.map(uri.url.match(/\{\{(.+?)\}\}/g), function (f) { return f.slice(2, -2); });
 
       return _.union(memo, fields);
     }, []);
@@ -19,22 +19,22 @@ $(function () {
       type: 'GET',
       dataType: 'json'
     };
-  }
+  };
 
   function decorateUser(user) {
-    var name = (user.name || '').split(' ');
+    let name = (user.name || '').split(' ');
 
     user.firstname = name[0] || '';
     user.lastname = name[1] || '';
 
     return user;
-  }
+  };
 
   function findUserById(users, user_id) {
     return _.find(users, function (user) {
       return user.id == user_id;
     }, this);
-  }
+  };
 
   function getContext(data) {
     var context = _.clone(this.containerContext());
@@ -51,19 +51,28 @@ $(function () {
 
     if (context.ticket.assignee.user.id) {
       context.ticket.assignee.user = decorateUser(findUserById(data.users, context.ticket.assignee.user.id));
-    }
+    };
 
     //copying data not available on this.containerContext()
-    context.ticket.id = this.ticket().id();
-    context.ticket.description = this.ticket().description();
+    let currentUserId = null;
 
-    context.current_user = decorateUser(findUserById(data.users, this.currentUser().id()));
-
-    return context;
-  }
+    client.get('ticket.id').then(data => {
+      context.ticket.id = data;
+      return client.get('ticket.description');
+    }).then(data => {
+      context.ticket.description = data;
+      return client.get('current_user');
+    }).then(data => {
+      currentUserId = data.id;
+      context.current_user = decorateUser(findUserById(data.users, currentUserId));
+      return context;
+    }), (error => {
+      log.error("An error occurred getting context data: ", error);
+    });
+  };
 
   function onFetchUsersDone(data) {
-    var templateUris = getUriTemplatesFromSettings(),
+    let templateUris = getUriTemplatesFromSettings(),
       templateOptions = { interpolate: /\{\{(.+?)\}\}/g },
       context = getContext(data),
       uris = _.map(templateUris, function (uri) {
@@ -80,24 +89,35 @@ $(function () {
   };
 
   function onAppCreated() {
-    var userIds = _.compact(_.uniq([
-      (this.ticket().assignee().user() && this.ticket().assignee().user().id()),
-      this.currentUser().id(),
-      (this.ticket().requester() && this.ticket().requester().id())
-    ]));
+    let assigneeId = null;
+    let requesterId = null;
+    let userId = null;
 
-    var settings = fetchUsers(userIds);
+    client.get('ticket.assignee.user').then(data => {
+      assigneeId = data.id;
+      return client.get('ticket.requester');
+    }).then(data => {
+      requesterId = data.id;      
+      return client.get('current_user');
+    }).then(data => {
+      userId = data.id;
+    }).catch(error => {
+      log.error("Error retrieving ids: ", error);
+    });
 
-    client.request(settings).then(function (data) {
+    let userIds = _.compact(_.uniq([assigneeId, userId, requesterId]));
+    let settings = fetchUsers(userIds);
+
+    client.request(settings).then(data => {
       onFetchUsersDone(data);
     });
-  }
+  };
 
   // Initialise the Zendesk JavaScript API client
   // https://developer.zendesk.com/apps/docs/apps-v2
   var client = ZAFClient.init();
 
-  client.on('app.registered', function () {
+  client.on('instance.created', function () {
     onAppCreated()
   });
 
