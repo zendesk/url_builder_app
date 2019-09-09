@@ -71,6 +71,18 @@ $(function () {
     });
   };
 
+  function switchView(templateName, viewData) {
+    let target = "#" + templateName;
+    let source = $(target).html();
+    let template = Handlebars.compile(source);
+    if (viewData) {
+      let html = temlate(viewData);
+    } else {
+      let html = template();
+    }
+    $("#content").html(html);
+  };
+
   function onFetchUsersDone(data) {
     let templateUris = getUriTemplatesFromSettings(),
       templateOptions = { interpolate: /\{\{(.+?)\}\}/g },
@@ -85,7 +97,7 @@ $(function () {
         return uri;
       }, this);
 
-    this.switchTo('list', { uris: uris });
+      switchView('list', { uris: uris });
   };
 
   function onAppCreated() {
