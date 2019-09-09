@@ -1,5 +1,23 @@
 $(function () {
 
+  // Initialise the Zendesk JavaScript API client
+  // https://developer.zendesk.com/apps/docs/apps-v2
+  var client = ZAFClient.init();
+
+  client.on('app.registered', function () {
+    console.log('app registered event');
+    onAppCreated();
+  });
+
+  client.on('*.changed', function (e) {
+    if (_.contains(fieldsToWatch(), e.propertyName))
+      return onAppCreated();
+  });
+
+  client.on('fetchUsers.done', function () {
+    onFetchUsersDone();
+  });
+
   function getUriTemplatesFromSettings() {
     return JSON.parse(this.settings.uri_templates);
   };
@@ -14,8 +32,10 @@ $(function () {
 
   // helper function that creates our request
   function fetchUsers(ids) {
+    console.log('fetchUsers with ids: ', ids);
+    console.log('fetchUsers with ids typeof: ', typeof ids);
     return {
-      url: helpers.fmt('/api/v2/users/show_many.json?ids=%@&include=organizations,groups', ids.join(',')),
+      url: `/api/v2/users/show_many.json?ids=${ids.join(',')}&include=organizations,groups`,
       type: 'GET',
       dataType: 'json'
     };
@@ -67,7 +87,7 @@ $(function () {
       context.current_user = decorateUser(findUserById(data.users, currentUserId));
       return context;
     }), (error => {
-      log.error("An error occurred getting context data: ", error);
+      console.error("An error occurred getting context data: ", error);
     });
   };
 
@@ -75,11 +95,12 @@ $(function () {
     let target = "#" + templateName;
     let source = $(target).html();
     let template = Handlebars.compile(source);
+    let html = template();
+
     if (viewData) {
-      let html = temlate(viewData);
-    } else {
-      let html = template();
+      html = temlate(viewData);
     }
+
     $("#content").html(html);
   };
 
@@ -101,44 +122,36 @@ $(function () {
   };
 
   function onAppCreated() {
+
+    console.log('in onAppCreated');
+
     let assigneeId = null;
     let requesterId = null;
     let userId = null;
 
     client.get('ticket.assignee.user').then(data => {
       assigneeId = data.id;
+      console.log('assigneeId: ', assigneeId);
       return client.get('ticket.requester');
     }).then(data => {
       requesterId = data.id;      
+      console.log('requesterId: ', requesterId);
       return client.get('current_user');
     }).then(data => {
       userId = data.id;
+      console.log('userId: ', userId);
     }).catch(error => {
-      log.error("Error retrieving ids: ", error);
+      console.error("Error retrieving ids: ", error);
     });
 
     let userIds = _.compact(_.uniq([assigneeId, userId, requesterId]));
+    console.log('userIds: ', userIds);
     let settings = fetchUsers(userIds);
+    console.log('settings: ', settings);
 
     client.request(settings).then(data => {
+      console.log('client request response: ', data);
       onFetchUsersDone(data);
     });
   };
-
-  // Initialise the Zendesk JavaScript API client
-  // https://developer.zendesk.com/apps/docs/apps-v2
-  var client = ZAFClient.init();
-
-  client.on('instance.created', function () {
-    onAppCreated()
-  });
-
-  client.on('*.changed', function (e) {
-    if (_.contains(fieldsToWatch(), e.propertyName))
-      return onAppCreated();
-  });
-
-  client.on('fetchUsers.done', function () {
-    onFetchUsersDone()
-  });
 });
