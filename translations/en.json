@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Easy Url",
+    "name": "URL Builder",
     "short_description": "Generate Buttons from a list of URLs",
     "long_description": "Generate Buttons from a list of URLs",
     "installation_instructions": "Simply click the install button",
