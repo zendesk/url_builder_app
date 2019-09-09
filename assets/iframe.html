@@ -4,21 +4,20 @@
         <link href="https://cdn.jsdelivr.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <link href="/app.css" rel="stylesheet">
     </head>
-    <header>
-        <span class="logo"/>
-        <h3>{{setting "name"}}</h3>
-    </header>
     <body>
-        <section data-main/>
-        <div class="well well-small">
-            <ul>
-                {{#each uris}}
-                <li>
-                    <strong><a href="{{this.url}}" target="_blank" class="btn">{{this.title}}</a></strong>
-                </li>
-                {{/each}}
-            </ul>
-        </div>
+        <div id="content"></div>
+
+        <script id="list" type="text/x-handlebars-template">
+            <div class="well well-small">
+                <ul>
+                    {{#each uris}}
+                    <li>
+                        <strong><a href="{{this.url}}" target="_blank" class="btn">{{this.title}}</a></strong>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </script>
         <!-- importing V2 script -->
         <script type="text/javascript" src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
         <script src="https://cdn.jsdelivr.net/g/lodash@4.3.0,handlebarsjs@4.0.5,jquery@2.2.0,momentjs@2.9.0,bootstrap@2.3.2"></script>
