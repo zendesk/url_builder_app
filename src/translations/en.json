@@ -1,0 +1,14 @@
+{
+  "app": {
+    "name": "URL Builder V2",
+    "short_description": "Generate Buttons from a list of URLs",
+    "long_description": "Generate Buttons from a list of URLs",
+    "installation_instructions": "Simply click the install button",
+    "parameters": {
+      "uri_templates": {
+        "label": "A JSON Array of urls.",
+        "helpText": "See https://github.com/Ibotta/url_builder_app/blob/master/README.md for more information."
+      }
+    }
+  }
+}

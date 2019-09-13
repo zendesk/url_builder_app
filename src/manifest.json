@@ -1,0 +1,25 @@
+{
+  "name": "Url Builder App V2",
+  "author": {
+    "name": "Rishi Sheth",
+    "email": "developers@ibotta.com",
+    "url": "https://www.ibotta.com/"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": {
+    "support": {
+      "ticket_sidebar": "assets/iframe.html",
+      "new_ticket_sidebar": "assets/iframe.html"
+    }
+  },
+  "parameters": [
+    {
+      "name": "uri_templates",
+      "type": "multiline",
+      "required": true
+    }
+  ], 
+  "version": "1.0.0",
+  "frameworkVersion": "2.0"
+}
