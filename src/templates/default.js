@@ -1,16 +1,11 @@
 import { templatingLoop as loop, escapeSpecialChars as escape } from '../javascripts/lib/helpers.js'
-import I18n from '../javascripts/lib/i18n.js'
 
-function organizationMarkup (organization) {
-  return `<li>${escape(organization.name)}</li>`
+function uriMarkup (uri) {
+  return `<li><strong class="u-font-family-system u-semibold"><a href="{{${uri.url}}}" target="_blank" class="btn">{{${uri.title}}}</a></strong></li>`
 }
 
 export default function (args) {
-  return `<div class="example-app">
-    <div>
-      <h1>Hi ${escape(args.currentUserName)}, this is a sample app</h1>
-      <h2>${I18n.t('default.organizations')}:</h2>
-      <ul>${loop(args.organizations, organizationMarkup)}</ul>
-    </div>
+  return `<div class="well well-small">
+    <ul class="u-list-style-none">${loop(args.uris, uriMarkup)}</ul>
   </div>`
 }
