@@ -7,19 +7,25 @@ $(function () {
   client.on('app.registered', () => {
     onAppCreated()
 
+    // TODO: CSS resizing
     client.invoke('resize', { width: '100%', height: '300px' })
 
+    // Used for App Name (primary, seconary apps)
     client.metadata().then(metadata => {
       switchView("header", metadata.settings.title)
     })
   })
 
+  // On any change on zendesk instance
+  // Reinitialize app
+  // TODO: Test on changed event
   client.on('*.changed', (e) => {
     console.log('change event detected: ', e)
     if (_.contains(fieldsToWatch(), e.propertyName))
       return onAppCreated()
   })
 
+  // TODO: Check for deprecation
   client.on('fetchUsers.done', () => {
     onFetchUsersDone()
   })
@@ -125,18 +131,18 @@ $(function () {
     }
   }
 
-  async function onFetchUsersDone(data) {
-    const templateOptions = { interpolate: /\{\{(.+?)\}\}/g }
+  async function buildTemplateUrls(data) {
+    const templateOptions = { interpolate: /\{\{(.+?)\}\}/g };
+    const templateUris = await getUriTemplatesFromSettings();
 
-    const templateUris = await getUriTemplatesFromSettings()
+    const { ticket, currentUser } = 
     const ticket = await client.get('ticket').ticket
     const currentUser = await client.get('currentUser').currentUser
-    ticket.assignee.user = await client.get('ticket.assignee')['ticket.assignee']
 
     const ticketFields = await client.request(getTicketData(ticket.id))
     ticketFields.ticket.custom_fields.forEach(custom_field => {
       ticket[`custom_field_${custom_field.id}`] = custom_field.value
-    })
+    });
 
     const context = getContext(data, ticket, currentUser)
 
@@ -156,7 +162,6 @@ $(function () {
   }
 
   async function onAppCreated() {
-
     const ticket = await client.get('ticket').ticket
     const assigneeId = ticket.assignee.user.id
     const requesterId = ticket.requester.id
@@ -166,6 +171,6 @@ $(function () {
     const userIds = _.compact(_.uniq([assigneeId, userId, requesterId]))
     const fetchedUserIds = await client.request(fetchUsers(userIds))
 
-    onFetchUsersDone(fetchedUserIds)
+    buildTemplateUrls(fetchedUserIds)
   }
 })

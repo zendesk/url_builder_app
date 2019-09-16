@@ -16,6 +16,8 @@ const API_ENDPOINTS = (id) => ({
 class App {
   constructor (client, appData) {
     this._client = client
+
+    // TODO: appData.metadata
     this._appData = appData
 
     this.states = {}
@@ -38,6 +40,7 @@ class App {
 
     const userIds = _.compact(_.uniq([assigneeId, userId, requesterId]))
     const fetchedUserIds = await client.request(fetchUsers(userIds))
+    buildTemplateUrls(fetchedUserIds);
     ///////
 
     const currentUser = (await this._client.get('currentUser')).currentUser
