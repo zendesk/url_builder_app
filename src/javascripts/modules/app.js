@@ -8,10 +8,10 @@ import getDefaultTemplate from '../../templates/default'
 import getHeaderTemplate from '../../templates/header'
 
 const MAX_HEIGHT = '300px'
-const API_ENDPOINTS = {
+const API_ENDPOINTS = (id) => ({
   users: '/api/v2/users/show_many.json',
   tickets: `/api/v2/tickets/${id}.json`
-}
+});
 
 class App {
   constructor (client, appData) {
