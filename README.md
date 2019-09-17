@@ -46,7 +46,8 @@ This example will generate the following HTML inside the app:
   </li>
 </ul>
 ```
-
+FIX THESE
+----
 ### Available Placeholders
 * {{ticket.id}} //not available for new tickets
 * {{ticket.description}}
@@ -67,7 +68,7 @@ This example will generate the following HTML inside the app:
 * {{ticket.assignee.group.name}}
 * {{ticket.custom_field_XXXXXXX}} // XXXXXXX = custom field id
 * {{ticket.organization.organization_fields.XXXXXXX}} // XXXXXXX = Field key, default is field name
-* {{current_user.id}}
+* {{currentUser.id}}
 * {{current_user.name}}
 * {{current_user.email}}
 * {{current_user.externalId}}
