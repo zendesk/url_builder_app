@@ -1,3 +1,5 @@
+import { buildTicketFields } from "./lib/helpers"
+
 $(function () {
 
   // Initialise the Zendesk JavaScript API client
@@ -35,14 +37,6 @@ $(function () {
     return JSON.parse(rawURIs)
   }
 
-  var fieldsToWatch = _.memoize(function() {
-    const uri_templates = getUriTemplatesFromSettings()
-    return _.reduce(uri_templates, function (memo, uri) {
-      const fields = _.map(uri.url.match(/\{\{(.+?)\}\}/g), function (f) { return f.slice(2, -2) })
-      return _.union(memo, fields)
-    }, [])
-  })
-
   // helper function that creates our request
   function fetchUsers(ids) {
     const url = null
@@ -61,7 +55,7 @@ $(function () {
   }
 
   function getTicketData(id) {
-    return { 
+    return {
       url: `/api/v2/tickets/${id}.json`,
       type: 'GET',
       dataType: 'json'
@@ -91,7 +85,7 @@ $(function () {
 
     if (ticket.requester.id) {
       context.ticket = ticket
-      context.ticket.requester = decorateUser(findUserById(data.users, ticket.requester.id))
+      context.ticket.requester = decorateUser(ticket.requester);
 
       // this should be ticket.requester.organization_id
       if (context.ticket.requester.organization_id) {
@@ -114,35 +108,14 @@ $(function () {
     return context
   }
 
-  function switchView(templateName, viewData) {
-    const target = "#" + templateName
-    const source = $(target).html()
-    const template = Handlebars.compile(source)
-    const html = template()
-
-    if (viewData) {
-      html = template(viewData)
-    }
-
-    if (templateName == 'list') {
-      $("#body-content").html(html)
-    } else if (templateName == 'header') {
-      $("#header-content").html(html)
-    }
-  }
-
   async function buildTemplateUrls(data) {
     const templateOptions = { interpolate: /\{\{(.+?)\}\}/g };
     const templateUris = await getUriTemplatesFromSettings();
 
-    const { ticket, currentUser } = 
-    const ticket = await client.get('ticket').ticket
     const currentUser = await client.get('currentUser').currentUser
 
-    const ticketFields = await client.request(getTicketData(ticket.id))
-    ticketFields.ticket.custom_fields.forEach(custom_field => {
-      ticket[`custom_field_${custom_field.id}`] = custom_field.value
-    });
+    let ticket = await client.get('ticket').ticket
+    ticket = buildTicketFields(ticket);
 
     const context = getContext(data, ticket, currentUser)
 
@@ -161,16 +134,4 @@ $(function () {
       switchView('list', { uris: uris })
   }
 
-  async function onAppCreated() {
-    const ticket = await client.get('ticket').ticket
-    const assigneeId = ticket.assignee.user.id
-    const requesterId = ticket.requester.id
-
-    const userId = await client.get('currentUser').currentUser.id
-
-    const userIds = _.compact(_.uniq([assigneeId, userId, requesterId]))
-    const fetchedUserIds = await client.request(fetchUsers(userIds))
-
-    buildTemplateUrls(fetchedUserIds)
-  }
 })

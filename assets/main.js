@@ -24,31 +24,6 @@ $(function () {
     onFetchUsersDone();
   });
 
-  function getUriTemplatesFromSettings() {
-    return new Promise((resolve, reject) => {
-      client.metadata().then(metadata => {
-        resolve(JSON.parse(metadata.settings.uri_templates));
-      }, error => {
-        reject (new Error("Error retrieving uri_templates: ", error));
-      });
-    });
-  };
-
-  var fieldsToWatch = _.memoize(function() {
-    getUriTemplatesFromSettings().then(uri_templates => {
-      console.log('fieldsToWatch templates: ', uri_templates);
-      return _.reduce(uri_templates, function (memo, uri) {
-        let fields = _.map(uri.url.match(/\{\{(.+?)\}\}/g), function (f) { return f.slice(2, -2); });
-
-        console.log('fieldsToWatch fields: ', fields);
-        console.log('fieldsToWatch return: ', _.union(memo, fields));
-        return _.union(memo, fields);
-      }, []);
-    }, error => {
-      throw error;
-    });
-  });
-
   // helper function that creates our request
   function fetchUsers(ids) {
     let url = null;
@@ -67,57 +42,17 @@ $(function () {
   };
 
   function getTicketData(id) {
-    return { 
+    return {
       url: `/api/v2/tickets/${id}.json`,
       type: 'GET',
       dataType: 'json'
     };
   };
 
-  function decorateUser(user) {
-    if (name) {
-      let name = (user.name || '').split(' ');
-
-      user.firstname = name[0] || '';
-      user.lastname = name[1] || '';
-
-      return user;
-    }
-  };
-
   function findUserById(users, user_id) {
     return _.find(users, user => {
       return user.id == user_id;
     }, this);
-  };
-
-  function getContext(data, ticket, currentUser) {
-
-    let context = [];
-
-    if (ticket.requester.id) {
-      context.ticket = ticket;
-      context.ticket.requester = decorateUser(findUserById(data.users, ticket.requester.id));
-
-      // this should be ticket.requester.organization_id
-      if (context.ticket.requester.organization_id) {
-        context.ticket.organization = _.find(data.organizations, org => {
-          return org.id = context.ticket.requester.organization_id;
-        });
-      }
-    }
-
-    if (ticket.assignee.id) {
-      context.ticket.assignee = [];
-      console.log('ticket.assignee.id', ticket);
-      context.ticket.assignee.user = decorateUser(findUserById(data.users, ticket.assignee.id));
-    }
-
-    context.ticket.id = ticket.id;
-    context.ticket.description = ticket.description;
-
-    context.current_user = decorateUser(findUserById(data.users, currentUser.id));
-    return context;
   };
 
   function switchView(templateName, viewData) {

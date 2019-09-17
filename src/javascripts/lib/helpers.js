@@ -1,3 +1,5 @@
+import { getTicketData } from "./api"
+
 /**
  * Resize App container
  * @param {ZAFClient} client ZAFClient object
