@@ -6,7 +6,7 @@ import { getTicketData } from "./api"
  * @param {Number} max max height available to resize to
  * @return {Promise} will resolved after resize
  */
-export function resizeContainer (client, max = Number.POSITIVE_INFINITY) {
+export function resizeContainer (client, newHeight) {
   return client.invoke('resize', { height: newHeight })
 }
 

@@ -4,7 +4,7 @@ function uriMarkup (uri) {
   return (`
     <li>
       <strong class="u-font-family-system u-semibold">
-        <a href="{{${uri.url}}}" target="_blank" class="btn">{{${uri.title}}}</a>
+        <a href="${uri.url}" target="_blank" class="btn">${uri.title}</a>
       </strong>
     </li>
   `);

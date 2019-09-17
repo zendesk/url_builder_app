@@ -5,8 +5,7 @@
 import I18n from '../../javascripts/lib/i18n'
 import { resizeContainer, render } from '../../javascripts/lib/helpers'
 import getDefaultTemplate from '../../templates/default'
-import getHeaderTemplate from '../../templates/header'
-import buildContext, { getTemplatesFromContext, getUrisFromSettings } from './context'
+import getContext, { buildTemplatesFromContext, getUrisFromSettings } from './context'
 
 const MAX_HEIGHT = '300px'
 
@@ -28,14 +27,13 @@ class App {
    */
   async init () {
     const uris = await getUrisFromSettings(this.settings);
-    const context = buildContext(this.client);
+    const context = await getContext(this.client);
     const templates = buildTemplatesFromContext(uris, context);
 
-    return renderTemplates(templates);
+    return this.renderTemplates(templates);
   }
 
   renderTemplates(templates) {
-    render('.header', getHeaderTemplate(this.settings))
     render('.loader', getDefaultTemplate(templates))
 
     return resizeContainer(this.client, MAX_HEIGHT)
