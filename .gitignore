@@ -2,3 +2,5 @@ tmp/
 .DS_Store
 .zat
 .vscode
+node_modules
+dist
