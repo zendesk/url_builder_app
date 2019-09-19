@@ -4,7 +4,7 @@ function uriMarkup (uri) {
   return (`
     <li>
       <strong class="u-font-family-system u-semibold">
-        <a href="${uri.url}" target="_blank" class="btn">${uri.title}</a>
+        <a href="${uri.url}" target="_blank" class="btn btn-url">${uri.title}</a>
       </strong>
     </li>
   `);
@@ -13,7 +13,7 @@ function uriMarkup (uri) {
 export default function (templateUris) {
   return (`
     <div class="well well-small">
-      <ul>${loop(templateUris, uriMarkup)}</ul>
+      <ul class="btn-list">${loop(templateUris, uriMarkup)}</ul>
     </div>
   `);
 }

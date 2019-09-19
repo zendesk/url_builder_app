@@ -95,7 +95,6 @@ function parseFirstLastName(user) {
 async function getContext(client) {
   function buildContext(ticket, currentUser) {
     let context = {};
-    console.log('[buildContext - ticket]', ticket);
     context.ticket = ticket;
 
     if (ticket.requester.id) {
@@ -117,7 +116,7 @@ async function getContext(client) {
     }
 
     context.current_user = parseFirstLastName(currentUser);
-    console.log('[buildContext - context]', context);
+
     return context;
   };
 
