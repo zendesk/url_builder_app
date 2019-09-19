@@ -6,10 +6,7 @@ let fieldsToWatch = [];
 let app = {};
 
 function getFieldsToWatchFromSettings({ uri_templates }) {
-  console.log('uri_templates', uri_templates);
   return _.reduce(JSON.parse(uri_templates), function (memo, uri) {
-    console.log('uri', uri)
-    console.log('memo', memo);
     const fields = _.map(uri.url.match(/\{\{(.+?)\}\}/g), function (f) { return f.slice(2, -2) })
     return _.union(memo, fields)
   }, [])

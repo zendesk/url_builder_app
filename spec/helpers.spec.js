@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { resizeContainer, templatingLoop, render, escapeSpecialChars as escape } from '../src/javascripts/lib/helpers'
+import { templatingLoop, render, escapeSpecialChars as escape, resizeAppContainer } from '../src/javascripts/lib/helpers'
 import createRangePolyfill from './polyfills/createRange'
 
 if (!document.createRange) {
@@ -16,7 +16,7 @@ function mockGetTemplate (item) {
 
 describe('resizeContainer', () => {
   it('client.invoke has been called', () => {
-    resizeContainer(client)
+    resizeAppContainer(client)
     expect(client.invoke).toHaveBeenCalled()
   })
 })

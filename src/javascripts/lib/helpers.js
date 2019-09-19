@@ -1,13 +1,19 @@
-import { getTicketData } from "./api"
-
 /**
- * Resize App container
+ * Resize App Container
+ *
+ * Resizes the app based off of the app element's size
+ * Allows for custom, overridable, dimensions to be passed as well
  * @param {ZAFClient} client ZAFClient object
- * @param {Number} max max height available to resize to
- * @return {Promise} will resolved after resize
+ * @param {...Object} dimensions - an optional param to override
+ *                                 automatic size calculation
  */
-export function resizeContainer (client, newHeight) {
-  return client.invoke('resize', { height: newHeight })
+export function resizeAppContainer (client, dimensions) {
+  if (Object.dimensions) {
+    return client.invoke('resize', { ...dimensions })
+  }
+
+  const { clientHeight } = document.getElementById('app');
+  return client.invoke('resize', { height: clientHeight });
 }
 
 /**

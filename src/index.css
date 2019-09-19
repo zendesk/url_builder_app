@@ -1,34 +1,30 @@
-.loader {
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
+.main {
+  height: 100%;
+  vertical-align: middle;
 }
 
-.btn {
-  width: 85% !important;
-  padding: 5px 10px 5px !important;
-  line-height: 18px !important;
-  color: #2F3941 !important;
-  text-shadow: none !important;
-  background-color: #ffffff !important;
-  background-image: none !important;
-  border: 1px solid #D8DCDE !important;
-  box-shadow: none !important;
+.loader {
+  display: block;
+  margin: auto;
+  width: 25%;
+  height: 25%;
+}
+
+.btn-url {
+  width: 100%;
+  color: #2F3941;
+  background-color: #ffffff;
+  background-image: none;
   white-space: nowrap;
 }
 
-section, ul, li {
+.btn-list {
   text-align: center;
-  background: transparent;
-  margin: 0 !important;
+  width: 90%;
+  margin: auto;
 }
 
-html {
-  overflow: hidden !important;
-}
-
-body {
-  overflow: hidden !important;
+#app {
+  height: 100%;
+  overflow: hidden;
 }

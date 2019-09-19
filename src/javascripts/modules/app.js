@@ -3,11 +3,9 @@
  **/
 
 import I18n from '../../javascripts/lib/i18n'
-import { resizeContainer, render } from '../../javascripts/lib/helpers'
+import { resizeAppContainer, render } from '../../javascripts/lib/helpers'
 import getDefaultTemplate from '../../templates/default'
 import getContext, { buildTemplatesFromContext, getUrisFromSettings } from './context'
-
-const MAX_HEIGHT = '300px'
 
 class App {
   constructor (client, appData) {
@@ -36,7 +34,7 @@ class App {
   renderTemplates(templates) {
     render('.loader', getDefaultTemplate(templates))
 
-    return resizeContainer(this.client, MAX_HEIGHT)
+    return resizeAppContainer(this.client);
   }
   /**
    * Handle error
