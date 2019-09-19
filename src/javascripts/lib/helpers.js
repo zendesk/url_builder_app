@@ -8,7 +8,7 @@
  *                                 automatic size calculation
  */
 export function resizeAppContainer (client, dimensions) {
-  if (Object.dimensions) {
+  if (dimensions) {
     return client.invoke('resize', { ...dimensions })
   }
 
