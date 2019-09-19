@@ -19,21 +19,10 @@
   white-space: nowrap;
 }
 
-.well {
-  padding-top: 20px;
-}
-
 section, ul, li {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  vertical-align: baseline;
+  text-align: center;
   background: transparent;
-}
-
-ul {
-  margin-bottom: 0;
+  margin: 0 !important;
 }
 
 html {
